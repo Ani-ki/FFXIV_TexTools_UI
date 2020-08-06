@@ -297,6 +297,7 @@
     <Compile Include="ViewModels\ImportModelViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MaterialEditorViewModel.cs" />
+    <Compile Include="ViewModels\MetadataViewModel.cs" />
     <Compile Include="ViewModels\ModConverterViewModel.cs" />
     <Compile Include="ViewModels\ModelViewModel.cs" />
     <Compile Include="ViewModels\ModListViewModel.cs" />
@@ -331,6 +332,18 @@
     </Compile>
     <Compile Include="Views\LanguageSelectView.xaml.cs">
       <DependentUpon>LanguageSelectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Metadata\EqdpControl.xaml.cs">
+      <DependentUpon>EqdpControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Metadata\EqpControl.xaml.cs">
+      <DependentUpon>EqpControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Metadata\ImcControl.xaml.cs">
+      <DependentUpon>ImcControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Metadata\MetadataView.xaml.cs">
+      <DependentUpon>MetadataView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ModConverterView.xaml.cs">
       <DependentUpon>ModConverterView.xaml</DependentUpon>
@@ -484,6 +497,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LanguageSelectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Metadata\EqdpControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Metadata\EqpControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Metadata\ImcControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Metadata\MetadataView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

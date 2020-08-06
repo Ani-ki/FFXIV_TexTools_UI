@@ -19,6 +19,7 @@ using FFXIV_TexTools.Properties;
 using FFXIV_TexTools.Resources;
 using FFXIV_TexTools.ViewModels;
 using FFXIV_TexTools.Views;
+using FFXIV_TexTools.Views.Metadata;
 using FFXIV_TexTools.Views.Models;
 using MahApps.Metro;
 using MahApps.Metro.Controls.Dialogs;
@@ -614,6 +615,24 @@ namespace FFXIV_TexTools
             var textureViewModel = textureView.DataContext as TextureViewModel;
             var sharedItemsView = SharedItemsTab.Content as SharedItemsView;
             var sharedItemsViewModel = sharedItemsView.DataContext as SharedItemsViewModel;
+            var metadataView = MetadataTab.Content as MetadataView;
+
+            var showMetadata = await metadataView.SetItem(item);
+            if (showMetadata)
+            {
+                MetadataTab.IsEnabled = true;
+                MetadataTab.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                if (MetadataTab.IsSelected)
+                {
+                    MetadataTab.IsSelected = false;
+                    MetadataTab.IsSelected = true;
+                }
+                MetadataTab.IsEnabled = false;
+                MetadataTab.Visibility = Visibility.Hidden;
+            }
 
             // This guy has no funny async callback.  It's ready once these awaits are done.
             await textureViewModel.UpdateTexture(item);
@@ -631,6 +650,8 @@ namespace FFXIV_TexTools
                 SharedItemsTab.IsEnabled = false;
                 SharedItemsTab.Visibility = Visibility.Hidden;
             }
+
+
 
 
             if (item.PrimaryCategory.Equals(XivStrings.UI) ||
