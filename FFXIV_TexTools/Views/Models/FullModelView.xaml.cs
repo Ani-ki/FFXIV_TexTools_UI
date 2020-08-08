@@ -22,6 +22,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Forms;
+using FFXIV_TexTools.Helpers;
+using FFXIV_TexTools.Resources;
+using MahApps.Metro.Controls.Dialogs;
 using xivModdingFramework.General.Enums;
 using xivModdingFramework.Items.Interfaces;
 using xivModdingFramework.Models.DataContainers;
@@ -37,8 +42,11 @@ namespace FFXIV_TexTools.Views.Models
     {
         private readonly DirectoryInfo _gameDirectory;
         private readonly FullModelViewModel _fmvm;
+        private static readonly Lazy<FullModelView> lazy = new Lazy<FullModelView>(() => new FullModelView());
 
-        public FullModelView()
+        public static FullModelView Instance => lazy.Value;
+
+        private FullModelView()
         {
             InitializeComponent();
 
@@ -67,7 +75,14 @@ namespace FFXIV_TexTools.Views.Models
                 throw new InvalidDataException("Unable to resolve model skeleton.");
             }
 
-            _fmvm.AddModelToView(ttModel, materialDictionary, item, race);
+            try
+            {
+                _fmvm.AddModelToView(ttModel, materialDictionary, item, race);
+            }
+            catch(Exception ex)
+            {
+                FlexibleMessageBox.Show(ex.Message, UIMessages.ModelAddErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
 
@@ -91,6 +106,8 @@ namespace FFXIV_TexTools.Views.Models
         /// <param name="fullModelName">The name chosen by the user for the full model export</param>
         private async Task Export(string fullModelName)
         {
+            var pc = await this.ShowProgressAsync(UIMessages.ExportingFullModelTitle, UIMessages.PleaseStandByMessage);
+
             var fileFormat = "fbx";
             var savePath = new DirectoryInfo(Settings.Default.Save_Directory);
             var outputFilePath = $"{savePath}\\FullModel\\{fullModelName}\\{fullModelName}.{fileFormat}";
@@ -160,15 +177,20 @@ namespace FFXIV_TexTools.Views.Models
                 File.Delete(outputFilePath);
                 File.Move(outputFile, outputFilePath);
             }
+
+            await pc.CloseAsync();
+
+            await this.ShowMessageAsync(UIMessages.FullModelExportSuccessTitle, string.Format(UIMessages.FullModelExportSuccessMessage, outputFilePath));
         }
 
         /// <summary>
-        /// Event handler when the window is closed
+        /// Event handler when the window is closing
         /// </summary>
-        private void MetroWindow_Closed(object sender, EventArgs e)
+        private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            // Clean up resources when the window is closed
             _fmvm.CleanUp();
+            e.Cancel = true;
+            this.Visibility = Visibility.Hidden;
         }
     }
 }

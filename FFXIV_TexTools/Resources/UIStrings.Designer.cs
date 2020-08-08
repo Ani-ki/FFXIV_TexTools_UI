@@ -774,6 +774,15 @@ namespace FFXIV_TexTools.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Face.
+        /// </summary>
+        public static string Face {
+            get {
+                return ResourceManager.GetString("Face", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to FFXIV Directory.
         /// </summary>
         public static string FFXIV_Directory {
@@ -2330,6 +2339,15 @@ namespace FFXIV_TexTools.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Skin.
+        /// </summary>
+        public static string Skin {
+            get {
+                return ResourceManager.GetString("Skin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Skin Color.
         /// </summary>
         public static string Skin_Color {
@@ -2528,7 +2546,7 @@ namespace FFXIV_TexTools.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This may up to 5 minutes if you have many mods installed....
+        ///   Looks up a localized string similar to This may take 30-60 seconds if you have many mods installed....
         /// </summary>
         public static string Updating_Cache_Message {
             get {

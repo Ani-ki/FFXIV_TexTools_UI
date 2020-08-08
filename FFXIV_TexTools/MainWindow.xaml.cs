@@ -228,15 +228,11 @@ namespace FFXIV_TexTools
             // Gets the model data of the current model in the model view
             var modelData = e as ModelViewModel.fullModelEventArgs;
 
-            // Open the full model view if it is not already open
-            if (_fmv == null || !_fmv.IsLoaded)
-            {
-                _fmv = new FullModelView();
+            var fmv = FullModelView.Instance;
+            fmv.Owner = this;
+            fmv.Show();
 
-                _fmv.Show();
-            }
-
-            await _fmv.AddModel(modelData.TTModelData, modelData.TextureData, modelData.Item, modelData.XivRace);
+            await fmv.AddModel(modelData.TTModelData, modelData.TextureData, modelData.Item, modelData.XivRace);
         }
 
         private void LanguageSelection()
@@ -1011,7 +1007,13 @@ namespace FFXIV_TexTools
                 // Stop the worker, in case it was reading from the file for some reason.
                 XivCache.CacheWorkerEnabled = false;
 
-                await Task.Run(XivCache.RebuildAllRoots);
+                try
+                {
+                    await Task.Run(XivCache.RebuildAllRoots);
+                } catch(Exception ex)
+                {
+                    FlexibleMessageBox.Show("Item Scan Error", "An error occured while trying to scan for new item sets.\n\n" + ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 await UnlockUi();
             }
         }
@@ -1199,8 +1201,10 @@ namespace FFXIV_TexTools
         /// </summary>
         private void FullModelViewer_Click(object sender, RoutedEventArgs e)
         {
-            _fmv = new FullModelView() { Owner = this };
-            _fmv.Show();
+            var fmv = FullModelView.Instance;
+            fmv.Owner = this;
+
+            fmv.Show();
         }
     }
 }
