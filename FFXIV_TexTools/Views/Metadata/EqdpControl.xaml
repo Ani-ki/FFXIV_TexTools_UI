@@ -6,9 +6,9 @@
              xmlns:local="clr-namespace:FFXIV_TexTools.Views.Metadata"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <GroupBox Header="Available Racial Models">
+    <GroupBox Header="Racial Models">
         <Grid>
-            
+            <UniformGrid x:Name="RacialGrid" Rows="8" Columns="2" Width="300" HorizontalAlignment="Left" Margin="10" />
         </Grid>
     </GroupBox>
 </UserControl>

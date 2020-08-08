@@ -93,6 +93,10 @@ namespace FFXIV_TexTools.Views.Metadata
                 box.IsChecked = active;
             }
 
+            var root = _metadata.Root;
+            var items = await root.GetAllItems(variant);
+            ItemNameBox.Text = "[" + items.Count + "] " + items[0].Name;
+
             SfxBox.Items.Clear();
             ushort sfx = (ushort)(entry.Mask >> 10);
             SfxBox.Items.Add(sfx);
@@ -104,6 +108,11 @@ namespace FFXIV_TexTools.Views.Metadata
             VfxBox.SelectedIndex = 0;
 
             MaterialSetBox.SelectedIndex = entry.Variant -1;
+
+        }
+
+        private void AffectedItemsButton_Click(object sender, RoutedEventArgs e)
+        {
 
         }
     }
