@@ -129,5 +129,10 @@ namespace FFXIV_TexTools.Views.Metadata
         {
 
         }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            _vm.Save();
+        }
     }
 }

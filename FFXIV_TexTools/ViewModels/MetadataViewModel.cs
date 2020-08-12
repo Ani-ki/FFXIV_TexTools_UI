@@ -62,5 +62,13 @@ namespace FFXIV_TexTools.ViewModels
 
             return (_metadata != null);
         }
+
+        public async Task<bool> Save()
+        {
+            if (_metadata == null) return false;
+
+            await ItemMetadata.ApplyMetadata(_metadata);
+            return true;
+        }
     }
 }
